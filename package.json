@@ -1,0 +1,28 @@
+{
+  "name": "ms-fiap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate:up": "node-pg-migrate up -m src/infra/database/migrations",
+    "migrate:down": "node-pg-migrate down -m src/infra/database/migrations",
+    "start": "nodemon server.js",
+    "app-build": "docker compose down && docker compose up --build -d",
+    "app-logs": "docker compose logs -f"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "amqplib": "^0.10.9",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mysql2": "^3.15.3",
+    "node-pg-migrate": "^8.0.4",
+    "nodemon": "^3.1.11",
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3"
+  }
+}
