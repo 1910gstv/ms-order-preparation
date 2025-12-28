@@ -1,6 +1,7 @@
-class OrderStatusUpdatedEvent {
+class OrderStatusUpdatedEvent {    
+    eventName = 'order.preparation.updated'
+    
     constructor({orderId, status, occuredAt}) {
-        this.eventName = 'order.preparation.updated'
         this.orderId = orderId
         this.status = status
         this.occuredAt = occuredAt || new Date()

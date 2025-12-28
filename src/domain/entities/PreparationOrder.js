@@ -4,9 +4,6 @@ class PreparationOrder {
   constructor({ orderId, items = [], status, startedAt, finishedAt }) {
 
     if(!orderId) throw new Error('orderId is required!')
-    // if (!items || items.length === 0) {
-    //     throw new Error('items are required.')
-    // }
 
     this.orderId = orderId;
     this.status = status ?? PreparationStatus.PENDING

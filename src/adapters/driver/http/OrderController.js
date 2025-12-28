@@ -20,7 +20,7 @@ class OrderController {
         try {
             const updateOrder = await this.startOrderPreparationUseCase.execute(req.body);
             
-            if (updateOrder && updateOrder.err) {
+            if (updateOrder?.err) {
                 return res.status(404).json({ message: updateOrder.err });
             }
 
@@ -35,7 +35,7 @@ class OrderController {
         try {
             const updateOrder = await this.finishOrderPreparationUseCase.execute(req.body);
             
-            if (updateOrder && updateOrder.err) {
+            if (updateOrder?.err) {
                 return res.status(404).json({ message: updateOrder.err });
             }
 
