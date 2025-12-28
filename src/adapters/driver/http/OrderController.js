@@ -27,7 +27,7 @@ class OrderController {
             return res.status(200).json(updateOrder); // Use 200 para atualizações bem-sucedidas
         } catch (error) {
             console.error("Erro ao iniciar preparação:", error);
-            return res.status(500).json({ message: "Erro interno ao iniciar preparação" });
+            return res.status(500).json({ message: "Erro interno ao iniciar preparação", error });
         }
     }
 
@@ -42,7 +42,7 @@ class OrderController {
             return res.status(200).json(updateOrder);
         } catch (error) {
             console.error("Erro ao finalizar preparação:", error);
-            return res.status(500).json({ message: "Erro interno ao finalizar preparação" });
+            return res.status(500).json({ message: "Erro interno ao finalizar preparação", error });
         }
     }
 
@@ -53,7 +53,7 @@ class OrderController {
             return res.status(200).json(orders || []);
         } catch (error) {
             console.error("Erro ao buscar pedidos por status:", error);
-            return res.status(500).json({ message: "Erro ao listar pedidos" });
+            return res.status(500).json({ message: "Erro ao listar pedidos", error });
         }
     }
 }

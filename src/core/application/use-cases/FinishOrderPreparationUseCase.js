@@ -13,7 +13,12 @@ class FinishOrderPreparationUseCase {
         return {err: "Order not found"}
     }
 
-    order.finishPreparation();
+    console.log(order)
+
+    const error = order.finishPreparation()
+    if(error){
+        return {err: error}
+    }
 
     await this.orderRepository.update(order);
 

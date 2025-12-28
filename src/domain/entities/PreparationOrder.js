@@ -16,20 +16,22 @@ class PreparationOrder {
 
   startPreparation() {
     if (this.status !== PreparationStatus.PENDING) {
-      console.log("Order is not in pending");
+      return "Order is not in pending";
     }
 
     this.status = PreparationStatus.IN_PROGRESS;
     this.startedAt = new Date();
+    return null
   }
 
   finishPreparation() {
     if (this.status !== PreparationStatus.IN_PROGRESS) {
-      console.log("Order is not in preparation");
+      return "Order is not in preparation";
     }
 
     this.status = PreparationStatus.DONE;
     this.finishedAt = new Date();
+    return null
   }
 }
 

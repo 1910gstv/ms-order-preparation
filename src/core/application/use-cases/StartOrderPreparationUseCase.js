@@ -13,8 +13,11 @@ class StartOrderPreparationUseCase {
         return {err: "Order not found"}
     }
 
-    order.startPreparation();
-
+    
+    const error = order.startPreparation();
+    if(error){
+        return {err: error}
+    }
     await this.orderRepository.update(order);
 
     const event = new OrderStatusUpdatedEvent({

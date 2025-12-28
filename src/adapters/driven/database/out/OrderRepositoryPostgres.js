@@ -48,27 +48,27 @@ class OrderRepositoryMySQL extends OrderRepository {
     return result.rowCount;
   }
 
-  async findByOrderId(orderId) {
-    const query = `
-        SELECT *
-        FROM orders
-        WHERE order_id = $1
-    `;
+    async findByOrderId(orderId) {
+        const query = `
+            SELECT *
+            FROM orders
+            WHERE order_id = $1
+        `;
 
-    const { rows } = await this.pool.query(query, [orderId]);
+        const { rows } = await this.pool.query(query, [orderId]);
 
-    if (rows.length === 0) {
-      return null;
+        if (rows.length === 0) {
+            return null
+        }
+
+        const row = rows[0];
+        return new PreparationOrder({
+        orderId: row.order_id,
+        status: row.status,
+        startedAt: row.started_at,
+        finishedAt: row.finished_at,
+        });
     }
-
-    const row = rows[0];
-    return new PreparationOrder({
-      orderId: row.order_id,
-      status: row.status,
-      startedAt: row.started_at,
-      finishedAt: row.finished_at,
-    });
-  }
 
   async findByStatus(status) {
     
