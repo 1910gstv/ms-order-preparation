@@ -64,10 +64,34 @@ class OrderRepositoryMySQL extends OrderRepository {
     const row = rows[0];
     return new PreparationOrder({
       orderId: row.order_id,
-      items: [],
       status: row.status,
       startedAt: row.started_at,
       finishedAt: row.finished_at,
+    });
+  }
+
+  async findByStatus(status) {
+    
+    const query = `
+        select *
+        from orders
+        where status ilike $1
+    `;
+    
+    const { rows } = await this.pool.query(query, [status]);
+    console.log(rows)
+
+    if (rows.length === 0) {
+      return [];
+    }
+
+    return rows.map(row => {
+      return new PreparationOrder({
+        orderId: row.order_id,
+        status: row.status,
+        startedAt: row.started_at,
+        finishedAt: row.finished_at,
+      });
     });
   }
 }

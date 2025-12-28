@@ -5,7 +5,7 @@ class CreateOrderService {
     this.orderRepository = orderRepository;
   }
 
-  async execute({ orderId, status }) {
+  async execute({ orderId, status }={}) {
     let finalOrderId = orderId || crypto.randomUUID()
     const order = new Order({ orderId: finalOrderId, status: status || 'PENDING' });
 

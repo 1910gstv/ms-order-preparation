@@ -8,6 +8,7 @@ const RabbitMQPublisher = require("../../message-broker/RabbitMQPublisher");
 const { getRabbitChannel } = require("../../message-broker/rabbitmqConnection");
 const StartOrderPreparationUseCase = require("../../../core/application/use-cases/StartOrderPreparationUseCase");
 const FinishOrderPreparationUseCase = require("../../../core/application/use-cases/FinishOrderPreparationUseCase");
+const GetAllOrdersByStatusUseCase = require("../../../core/application/use-cases/GetAllOrdersByStatusUseCase");
 
 module.exports = () => {
   const router = express.Router();
@@ -30,9 +31,10 @@ module.exports = () => {
   const createOrderUseCase = new CreateOrderUseCase(orderRepository);
   const startOrderPreparationUseCase = new StartOrderPreparationUseCase(orderRepository, eventPublisher);
   const finishOrderPreparationUseCase = new FinishOrderPreparationUseCase(orderRepository, eventPublisher);
+  const getAllOrdersByStatusUseCase = new GetAllOrdersByStatusUseCase(orderRepository)
 
   // 🎮 Controller (application)
-  const orderController = new OrderController(createOrderUseCase,startOrderPreparationUseCase,finishOrderPreparationUseCase);
+  const orderController = new OrderController(createOrderUseCase,startOrderPreparationUseCase,finishOrderPreparationUseCase,getAllOrdersByStatusUseCase);
 
   // 📡 Endpoint HTTP
   router.post("/", (req, res) => {
@@ -45,6 +47,10 @@ module.exports = () => {
   router.post("/finish", (req, res) => {
     orderController.finishOrderPreparation(req, res);
   });
+
+  router.get("/get/status/:status",(req,res) => {
+    orderController.getOrdersByStatus(req,res)
+  })
 
   return router;
 };

@@ -9,7 +9,6 @@ class PreparationOrder {
     // }
 
     this.orderId = orderId;
-    this.items = items;
     this.status = status ?? PreparationStatus.PENDING
     this.startedAt = startedAt ?? null
     this.finishedAt = finishedAt ?? null
