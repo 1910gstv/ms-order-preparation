@@ -8,3 +8,9 @@
 
 ### Rollback
     npx node-pg-migrate down
+
+### Buildar docker
+    npm run app-build
+
+### Logs docker
+    npm run app-logs

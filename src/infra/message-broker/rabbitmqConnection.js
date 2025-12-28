@@ -14,7 +14,7 @@ async function getRabbitChannel() {
     return channel;
   } catch (error) {
     console.error("❌ Erro ao conectar no RabbitMQ:", error.message);
-    return null; // NÃO derruba a app
+    return null;
   }
 }
 

@@ -1,13 +1,13 @@
 const express = require("express");
 
 const CreateOrderUseCase = require("../../../core/application/use-cases/CreateOrderService");
-const UpdateOrderStatus = require("../../../core/application/use-cases/UpdateOrderStatus")
 const OrderController = require("../../../adapters/driver/http/OrderController");
 const PostgresOrderRepository = require("../../../adapters/driven/database/out/OrderRepositoryPostgres");
 const { Pool } = require("pg");
 const RabbitMQPublisher = require("../../message-broker/RabbitMQPublisher");
-// const createRabbitChannel = require("../../config/rabbitmq");
 const { getRabbitChannel } = require("../../message-broker/rabbitmqConnection");
+const StartOrderPreparationUseCase = require("../../../core/application/use-cases/StartOrderPreparationUseCase");
+const FinishOrderPreparationUseCase = require("../../../core/application/use-cases/FinishOrderPreparationUseCase");
 
 module.exports = () => {
   const router = express.Router();
@@ -28,18 +28,22 @@ module.exports = () => {
 
   // 🧠 Use case (core)
   const createOrderUseCase = new CreateOrderUseCase(orderRepository);
-  const updateOrderStatus = new UpdateOrderStatus(orderRepository, eventPublisher);
+  const startOrderPreparationUseCase = new StartOrderPreparationUseCase(orderRepository, eventPublisher);
+  const finishOrderPreparationUseCase = new FinishOrderPreparationUseCase(orderRepository, eventPublisher);
 
   // 🎮 Controller (application)
-  const orderController = new OrderController(createOrderUseCase,updateOrderStatus);
+  const orderController = new OrderController(createOrderUseCase,startOrderPreparationUseCase,finishOrderPreparationUseCase);
 
   // 📡 Endpoint HTTP
   router.post("/", (req, res) => {
     orderController.create(req, res);
   });
 
-  router.patch("/update", (req, res) => {
-    orderController.updateOrder(req, res);
+  router.post("/start", (req, res) => {
+    orderController.startOrderPreparation(req, res);
+  });
+  router.post("/finish", (req, res) => {
+    orderController.finishOrderPreparation(req, res);
   });
 
   return router;
