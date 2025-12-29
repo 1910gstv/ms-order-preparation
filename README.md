@@ -14,3 +14,7 @@
 
 ### Logs docker
     npm run app-logs
+
+1. Testes Unitários
+2. Testes de Integração
+3. Testes de API
